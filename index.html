@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="发来 polar 的 .html 包，24 小时内回已验收的 GLB；没通过只回原因。48 小时验证期免费。" />
+    <meta property="og:title" content="Polar 包交付入口" />
+    <meta property="og:description" content="发来 polar 的 .html 包，24 小时内回已验收的 GLB；没通过只回原因。" />
+    <link rel="icon" href="data:," />
+    <title>Polar 包交付入口</title>
+    <style>
+      :root {
+        --bg: #f4f4f1;
+        --surface: #ffffff;
+        --surface-2: #ececea;
+        --ink: #191c1a;
+        --ink-2: #4c534f;
+        --ink-3: #767e7a;
+        --line: #d9dcd8;
+        --line-strong: #b9beb9;
+        --accent: #0c6b4f;
+        --accent-ink: #ffffff;
+        --accent-soft: #e2efe9;
+        --warn-ink: #8a5410;
+        --warn-soft: #f7ecd9;
+        --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+        --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #101211;
+          --surface: #181b19;
+          --surface-2: #1f2320;
+          --ink: #eceeed;
+          --ink-2: #b7bcb8;
+          --ink-3: #878e89;
+          --line: #2c302d;
+          --line-strong: #454a45;
+          --accent: #3cb58c;
+          --accent-ink: #0b1512;
+          --accent-soft: #173129;
+          --warn-ink: #e0aa54;
+          --warn-soft: #2e2413;
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 16px;
+        line-height: 1.65;
+      }
+      a { color: var(--accent); }
+      .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px 64px; }
+
+      /* ---------- hero ---------- */
+      .hero { padding: 52px 0 8px; }
+      .hero-tag {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em;
+        color: var(--accent); border: 1px solid var(--accent);
+        border-radius: 999px; padding: 5px 12px; margin: 0 0 22px;
+      }
+      .hero-tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+      h1 {
+        font-size: clamp(30px, 6.4vw, 46px); line-height: 1.22; font-weight: 800;
+        letter-spacing: -.01em; margin: 0 0 14px;
+      }
+      h1 .fmt { font-family: var(--mono); font-weight: 700; font-size: .82em; }
+      .hero-sub { font-size: 17px; color: var(--ink-2); margin: 0 0 26px; max-width: 34em; }
+      .hero-sub strong { color: var(--ink); }
+
+      .rights {
+        margin: 0 0 14px; padding: 12px 16px; border: 1px solid var(--warn-ink);
+        background: var(--warn-soft); color: var(--warn-ink); border-radius: 10px;
+        font-size: 14.5px; line-height: 1.7;
+      }
+      .rights strong { color: var(--warn-ink); }
+      .mailbox {
+        background: var(--surface); border: 1px solid var(--line-strong);
+        border-radius: 10px; padding: 18px 20px;
+        display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;
+      }
+      .mailbox-label { font-size: 13px; color: var(--ink-3); width: 100%; margin: 0; }
+      .mailbox-addr {
+        font-family: var(--mono); font-size: clamp(17px, 4.4vw, 22px); font-weight: 700;
+        letter-spacing: -.01em; word-break: break-all; flex: 1 1 auto; margin: 0;
+      }
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        min-height: 44px; padding: 10px 20px; border-radius: 8px;
+        font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer;
+        border: 1px solid transparent; font-family: var(--sans);
+      }
+      .btn-primary { background: var(--accent); color: var(--accent-ink); }
+      .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+      .btn:active { transform: translateY(1px); }
+      .btn:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .mailbox-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+      .copy-note { font-size: 13px; color: var(--accent); min-height: 1.4em; margin: 2px 0 0; width: 100%; }
+      .mail-guide {
+        width: 100%; margin: 4px 0 0; padding-top: 14px; border-top: 1px solid var(--line);
+        font-size: 14.5px; color: var(--ink-2); line-height: 1.7;
+      }
+      .mail-guide strong { color: var(--ink); }
+      .mail-guide ol { margin: 6px 0 0; padding-left: 1.35em; }
+      .mail-guide li { padding: 1px 0; }
+      .mail-guide code { font-family: var(--mono); font-size: 13.5px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; }
+
+      .hero-facts {
+        display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+        background: var(--line); border: 1px solid var(--line);
+        border-radius: 10px; overflow: hidden; margin: 22px 0 0;
+      }
+      .hero-facts div { background: var(--surface); padding: 14px 16px; }
+      .hero-facts dt { font-size: 12.5px; color: var(--ink-3); margin: 0 0 3px; }
+      .hero-facts dd { font-size: 15.5px; font-weight: 700; margin: 0; }
+      .hero-facts dd small { font-weight: 400; color: var(--ink-2); font-size: 13px; }
+
+      /* ---------- sections ---------- */
+      section { margin-top: 52px; }
+      h2 { font-size: 21px; font-weight: 800; margin: 0 0 6px; letter-spacing: -.01em; }
+      .sec-lede { color: var(--ink-2); margin: 0 0 20px; max-width: 38em; }
+
+      .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .check-card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 10px; padding: 22px;
+      }
+      .check-num { font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); margin: 0 0 10px; }
+      .check-card h3 { font-size: 18px; margin: 0 0 8px; font-weight: 750; }
+      .check-card p { color: var(--ink-2); margin: 0; font-size: 15px; }
+      .check-card ul { margin: 12px 0 0; padding: 0; list-style: none; }
+      .check-card li {
+        font-size: 14px; color: var(--ink-2); padding: 5px 0 5px 22px; position: relative;
+      }
+      .check-card li::before {
+        content: ""; position: absolute; left: 2px; top: 12px;
+        width: 8px; height: 8px; border-radius: 2px; background: var(--surface-2);
+        border: 1px solid var(--line-strong);
+      }
+      .verdict {
+        margin-top: 16px; border: 1px solid var(--accent); background: var(--accent-soft);
+        border-radius: 10px; padding: 16px 20px; font-size: 15.5px;
+      }
+      .verdict strong { color: var(--accent); }
+      @media (prefers-color-scheme: light) { .verdict strong { color: #0a5a42; } }
+
+      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: step; }
+      .step { border-top: 2px solid var(--ink); padding-top: 14px; }
+      .step .n { font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
+      .step h3 { font-size: 16.5px; margin: 4px 0 6px; font-weight: 750; }
+      .step p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+
+      /* ---------- example receipt ---------- */
+      .receipt {
+        background: var(--surface); border: 1px solid var(--line-strong); border-radius: 10px;
+        overflow: hidden;
+      }
+      .receipt-head {
+        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+        padding: 16px 22px; border-bottom: 1px dashed var(--line-strong);
+      }
+      .receipt-head .t { font-weight: 750; font-size: 16px; }
+      .stamp {
+        font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
+        color: var(--accent); border: 1.5px solid var(--accent); border-radius: 6px; padding: 3px 10px;
+      }
+      .receipt table { width: 100%; border-collapse: collapse; font-size: 15px; }
+      .receipt th, .receipt td { text-align: left; padding: 12px 22px; vertical-align: top; }
+      .receipt th { color: var(--ink-3); font-weight: 500; font-size: 13.5px; width: 34%; white-space: nowrap; }
+      .receipt tr + tr th, .receipt tr + tr td { border-top: 1px solid var(--line); }
+      .receipt td .num { font-family: var(--mono); font-weight: 700; font-size: 17px; }
+      .pass { color: var(--accent); font-weight: 700; }
+      @media (prefers-color-scheme: light) { .pass { color: #0a5a42; } }
+
+      /* ---------- checklist / notes ---------- */
+      .send-list { list-style: none; margin: 0; padding: 0; }
+      .send-list li {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+        padding: 14px 18px 14px 50px; position: relative; margin-bottom: 10px; font-size: 15px;
+      }
+      .send-list li::before {
+        content: "✓"; position: absolute; left: 16px; top: 13px;
+        width: 22px; height: 22px; border-radius: 50%;
+        background: var(--accent-soft); color: var(--accent);
+        font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+      }
+      .send-list li span { color: var(--ink-2); }
+      .send-list code { font-family: var(--mono); font-size: 13.5px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; }
+
+      .notes { border: 1px solid var(--line); border-radius: 10px; padding: 6px 22px; background: var(--surface); }
+      .notes dl { margin: 0; }
+      .notes .row { display: grid; grid-template-columns: 168px 1fr; gap: 6px 18px; padding: 13px 0; }
+      .notes .row + .row { border-top: 1px solid var(--line); }
+      .notes dt { font-weight: 700; font-size: 14.5px; }
+      .notes dd { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+
+      footer {
+        margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--line);
+        display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between;
+      }
+      .back-link {
+        display: inline-flex; align-items: center; min-height: 40px;
+        font-weight: 600; text-decoration: none; font-size: 15px;
+      }
+      .back-link:hover { text-decoration: underline; }
+      footer .fine { color: var(--ink-3); font-size: 13px; margin: 0; }
+
+      @media (max-width: 640px) {
+        .hero { padding-top: 36px; }
+        .checks, .steps { grid-template-columns: 1fr; }
+        .hero-facts { grid-template-columns: 1fr; }
+        .hero-facts div { padding: 12px 16px; }
+        .notes .row { grid-template-columns: 1fr; gap: 2px; }
+        .receipt th { width: auto; white-space: normal; }
+        .receipt th, .receipt td { padding: 11px 16px; }
+        .receipt-head { padding: 14px 16px; }
+        .mailbox { padding: 16px; }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .btn { transition: transform .08s ease; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <!-- Hero -->
+      <header class="hero">
+        <p class="hero-tag">48 小时验证期 · 免费</p>
+        <h1>发来 polar 的 <span class="fmt">.html</span> 包，<br />发回已验收的 GLB</h1>
+        <p class="hero-sub">
+          只接 <strong>playable polar</strong> 一种包。你的包会在后台按现有 polar 流程跑通并完成对账，
+          通过验收后回传 GLB；没通过，只回原因，不发文件。
+        </p>
+
+        <p class="rights">
+          <strong>受理范围：</strong>仅受理自有项目，或已获权利方授权的包。发送即表示你确认拥有使用权或已获授权；
+          无法确认权属的包，只回「无法受理」，不处理。
+        </p>
+
+        <div class="mailbox">
+          <p class="mailbox-label">收包邮箱 · 把 .html 包作为附件发到这里</p>
+          <p class="mailbox-addr" id="mailAddr">bananacatfable@gmail.com</p>
+          <div class="mailbox-actions">
+            <a class="btn btn-primary" href="mailto:bananacatfable@gmail.com?subject=Polar%20%E5%8C%85%E9%AA%8C%E6%94%B6">用邮件 App 发送</a>
+            <button class="btn btn-ghost" type="button" id="copyBtn">复制邮箱</button>
+          </div>
+          <p class="copy-note" id="copyNote" role="status" aria-live="polite"></p>
+          <div class="mail-guide">
+            <strong>怎么发：</strong>
+            <ol>
+              <li>点「用邮件 App 发送」，收件人和标题会自动填好；也可以点「复制邮箱」，自己粘贴。</li>
+              <li>标题保持 <code>Polar 包验收</code>，正文里说明你的项目名。</li>
+              <li>把 polar 的 <code>.html</code> 单文件包作为附件加上（链接带不了附件，需要你手动加），发送。</li>
+            </ol>
+          </div>
+        </div>
+
+        <dl class="hero-facts">
+          <div>
+            <dt>接收类型</dt>
+            <dd>polar <small>· 仅 .html 单文件包</small></dd>
+          </div>
+          <div>
+            <dt>交付物</dt>
+            <dd>已验收 GLB <small>· 或未通过原因</small></dd>
+          </div>
+          <div>
+            <dt>回件时限</dt>
+            <dd>24 小时 <small>· 通过与否都回邮件</small></dd>
+          </div>
+          <div>
+            <dt>验证期费用</dt>
+            <dd>免费 <small>· 48 小时验证期内</small></dd>
+          </div>
+        </dl>
+      </header>
+
+      <!-- Acceptance criteria -->
+      <section aria-labelledby="criteria-h">
+        <h2 id="criteria-h">验收标准：两项都过，才发 GLB</h2>
+        <p class="sec-lede">没有第三种结果。两项里任意一项不过，就只回一份原因说明，GLB 不发出。</p>
+        <div class="checks">
+          <article class="check-card">
+            <p class="check-num">CHECK 01</p>
+            <h3>结构校验</h3>
+            <p>包能不能完整跑通、还原出来的结构成不成立。</p>
+            <ul>
+              <li>包可正常解析、跑通，无缺失与中断</li>
+              <li>场景层级与模型结构完整</li>
+              <li>还原结果无明显破损、错位</li>
+            </ul>
+          </article>
+          <article class="check-card">
+            <p class="check-num">CHECK 02</p>
+            <h3>世界包围盒对账</h3>
+            <p>还原结果和原包的世界空间对不对得上，逐项对账。</p>
+            <ul>
+              <li>整体世界包围盒尺寸对账</li>
+              <li>位置与范围对账，不漂移、不缩放</li>
+              <li>对账不符即判未通过</li>
+            </ul>
+          </article>
+        </div>
+        <div class="verdict">
+          <strong>判定规则：</strong>结构校验 ✓ ＋ 世界包围盒对账 ✓ → 回传已验收 GLB；
+          任一项 ✗ → 只回未通过原因，不发 GLB。
+        </div>
+      </section>
+
+      <!-- Flow -->
+      <section aria-labelledby="flow-h">
+        <h2 id="flow-h">流程</h2>
+        <p class="sec-lede">不是全自动即时交付。跑通与对账在后台按现有 polar 流程逐包完成，收到包后 24 小时内用邮件回你，通过与否都回。</p>
+        <div class="steps">
+          <div class="step">
+            <span class="n">STEP 1</span>
+            <h3>发包到邮箱</h3>
+            <p>把 polar 的 .html 单文件包作为附件，发到上方的收包邮箱。</p>
+          </div>
+          <div class="step">
+            <span class="n">STEP 2</span>
+            <h3>后台验收</h3>
+            <p>按现有 polar 流程跑通，做结构校验和世界包围盒对账，两项逐项判定。</p>
+          </div>
+          <div class="step">
+            <span class="n">STEP 3</span>
+            <h3>邮件回传</h3>
+            <p>收到包后 24 小时内回邮件：两项都通过，回传已验收 GLB；未通过，只回具体原因，不附文件。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Verified example -->
+      <section aria-labelledby="example-h">
+        <h2 id="example-h">交付单示例</h2>
+        <p class="sec-lede">以下为示例数据，用来说明交付单长什么样，不是某位客户的交付记录。两项验收的口径与你的包相同。</p>
+        <div class="receipt">
+          <div class="receipt-head">
+            <span class="t">Polar 包 · 验收交付单（示例）</span>
+            <span class="stamp">示例数据 SAMPLE</span>
+          </div>
+          <table>
+            <tr>
+              <th scope="row">提交的包</th>
+              <td><span class="num">8 MB</span> · 单文件 .html 包</td>
+            </tr>
+            <tr>
+              <th scope="row">还原模型</th>
+              <td><span class="num">3,732</span> 个模型</td>
+            </tr>
+            <tr>
+              <th scope="row">结构校验</th>
+              <td class="pass">通过</td>
+            </tr>
+            <tr>
+              <th scope="row">世界包围盒对账</th>
+              <td class="pass">通过</td>
+            </tr>
+            <tr>
+              <th scope="row">交付文件</th>
+              <td><span class="num">2.3 MB</span> · GLB</td>
+            </tr>
+          </table>
+        </div>
+      </section>
+
+      <!-- What to send -->
+      <section aria-labelledby="send-h">
+        <h2 id="send-h">发之前，对一遍</h2>
+        <ul class="send-list">
+          <li>是 <strong>自有项目或已获授权</strong>的包 <span>—— 发送即表示你确认拥有使用权；无法确认权属的包只回「无法受理」。</span></li>
+          <li>是 <strong>polar</strong> 的包 <span>—— 其他类型的包不接，发来也只会回无法处理。</span></li>
+          <li>是单个 <code>.html</code> 文件 <span>—— 直接作附件，不要拆成多个文件。</span></li>
+          <li>邮件标题建议写 <code>Polar 包验收 + 项目名</code> <span>—— 方便对上号，回件更快对得上。</span></li>
+          <li>留意邮箱回件 <span>—— 通过回 GLB，未通过回原因，都在 24 小时内走原邮件回复。</span></li>
+        </ul>
+      </section>
+
+      <!-- Boundaries -->
+      <section aria-labelledby="notes-h">
+        <h2 id="notes-h">说清楚的几件事</h2>
+        <div class="notes">
+          <dl>
+            <div class="row">
+              <dt>交付的只有结果</dt>
+              <dd>这里交付的是验收通过的 GLB，不提供方法，也不提供教程。</dd>
+            </div>
+            <div class="row">
+              <dt>你的包只用这一次</dt>
+              <dd>你发来的包只用于本次交付验收，不复用、不公开、不作其他用途。</dd>
+            </div>
+            <div class="row">
+              <dt>不是即时交付</dt>
+              <dd>提交后在后台逐包跑通与对账，收到包后 24 小时内回件，没有提交即下载的自动通道。</dd>
+            </div>
+            <div class="row">
+              <dt>只接一种包</dt>
+              <dd>目前只接 playable polar 的 .html 包，其他格式与其他类型不在受理范围内。</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <footer>
+        <a class="back-link" href="https://yigenjiao.github.io/Bowen/">← 返回作品集</a>
+        <p class="fine">回件时限 24 小时 · 48 小时验证期内免费</p>
+      </footer>
+
+    </div>
+
+    <script>
+      (function () {
+        var btn = document.getElementById('copyBtn');
+        var note = document.getElementById('copyNote');
+        var email = document.getElementById('mailAddr').textContent.trim();
+        btn.addEventListener('click', function () {
+          function done() { note.textContent = '已复制，去邮箱里粘贴发送即可。'; }
+          function fail() { note.textContent = '复制没成，手动记一下：' + email; }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(email).then(done, fail);
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = email;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            ta.setSelectionRange(0, email.length);
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            document.body.removeChild(ta);
+            if (ok) { done(); } else { fail(); }
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
